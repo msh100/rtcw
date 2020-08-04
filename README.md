@@ -40,3 +40,9 @@ NOQUERY              | Disable status queries         | Disabled, set to `true` 
 MAXCLIENTS           | Maximum number of players      | 32
 CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
+
+
+Todo
+----
+
+ - `main/qagamei386.so` and `wolfded.x86` come from my webserver. Is there a better source for these?

@@ -14,11 +14,24 @@ CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
 GAME_BASE="/home/game"
 
 # Iterate over all maps and download them if necessary
+# We will also strip out potential barrels (bug) at this point.
 export IFS=":"
 for map in $MAPS; do
     if [ ! -f "${GAME_BASE}/main/${map}.pk3" ]; then
         echo "Attempting to download ${map}"
-        wget -O "${GAME_BASE}/main/${map}.pk3" "${CONF_REDIR}/$map.pk3"
+        wget -O "${GAME_BASE}/main/${map}.pk3.tmp" "${CONF_REDIR}/$map.pk3"
+
+        mkdir -p "${GAME_BASE}/tmp/"
+        unzip "${GAME_BASE}/main/${map}.pk3.tmp" -d "${GAME_BASE}/tmp/"
+        if grep "props_flamebarrel" "${GAME_BASE}/tmp/maps/${map}.bsp"; then
+            echo "props_flamebarrel found in ${map} - removing it."
+            bbe -e \
+                's/props_flamebarrel/props_flamebar111/' \
+                "${GAME_BASE}/tmp/maps/${map}.bsp" > \
+                "${GAME_BASE}/osp/maps/${map}.bsp"
+        fi
+        rm -rf "${GAME_BASE}/tmp/"
+        mv "${GAME_BASE}/main/${map}.pk3.tmp" "${GAME_BASE}/main/${map}.pk3"
     fi
 done
 
