@@ -18,5 +18,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: msh100/rtcw
-          build_args: STEAM_USER="${{ secrets.STEAM_USER }}",STEAM_PASS="${{ secrets.STEAM_PASS }}"
+          build_args: STEAM_USER=${{ secrets.STEAM_USER }},STEAM_PASS=${{ secrets.STEAM_PASS }}
           tags: latest
