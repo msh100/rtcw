@@ -39,3 +39,4 @@ MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
 CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
+TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
