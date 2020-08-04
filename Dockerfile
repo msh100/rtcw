@@ -29,6 +29,13 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
 RUN wget https://msh100.uk/files/libnoquery.so && \
     md5sum libnoquery.so | cut -d' ' -f1 | grep 91d9c6fd56392c60461c996ca29d6467
 
+RUN wget https://msh100.uk/files/rtcw-mapscripts.tar.gz && \
+    md5sum rtcw-mapscripts.tar.gz | cut -d' ' -f1 | grep 3dc50ff0b318cb9e0fbe9d6f511b12e3 && \
+    tar -xvf rtcw-mapscripts.tar.gz && \
+    mkdir -p osp/maps/ && \
+    mv maps/*.bsp osp/maps/ && \
+    rm -rf rtcw-mapscripts.tar.gz maps/
+
 COPY --chown=game:game mapscripts/* /home/game/osp/maps/
 COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
 
