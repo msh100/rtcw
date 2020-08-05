@@ -43,7 +43,8 @@ fi
 # Iterate over all config variables and write them in place
 cp "${GAME_BASE}/main/server.cfg.tpl" "${GAME_BASE}/main/server.cfg"
 for var in "${!CONF_@}"; do
-    sed -i "s/%${var}%/${!var}/g" "${GAME_BASE}/main/server.cfg"
+    value=$(echo "${!var}" | sed 's/\//\\\//g')
+    sed -i "s/%${var}%/${value}/g" "${GAME_BASE}/main/server.cfg"
 done
 sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
 
