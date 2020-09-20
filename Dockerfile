@@ -70,6 +70,10 @@ RUN wget http://archive.debian.org/debian/pool/main/g/gcc-2.95/libstdc++2.10-gli
     rm -rf libstdc++2.10-glibc2.2_2.95.4-27_i386.deb
 
 RUN useradd -ms /bin/bash game
+
+RUN mkdir -p /home/game/osp/logs && chown game:game /home/game/osp/logs
+VOLUME /home/game/osp/logs
+
 USER game
 WORKDIR /home/game
 

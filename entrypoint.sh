@@ -63,6 +63,8 @@ exec "${GAME_BASE}/wolfded.x86" \
     +set net_ip 0.0.0.0 \
     +set net_port ${CONF_PORT} \
     +set sv_maxclients ${CONF_MAXCLIENTS} \
+    +set fs_basepath ${GAME_BASE} \
+    +set fs_homepath ${GAME_BASE} \
     +exec server.cfg \
     +map ${CONF_STARTMAP} \
     $@
