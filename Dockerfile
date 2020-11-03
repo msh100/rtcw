@@ -31,13 +31,13 @@ RUN mkdir -p /output/main/ && \
 RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     md5sum osp-wolf-0.9.zip | cut -d' ' -f1 | grep 835eea094b832dc48a4d8329ce5290ba && \
     unzip osp-wolf-0.9.zip && \
-    rm -rf rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
+    rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
     mv osp /output/
 
 RUN wget http://rtcwpro.com/files/server/rtcwpro_server.zip && \
     md5sum rtcwpro_server.zip | cut -d' ' -f1 | grep 646137a9e13ef819e1523bb4b86f7c90 && \
     unzip rtcwpro_server.zip && \
-    rm -rf rm -rf rtcwpro_server.zip rtcwpro/qagame_mp_x86.dll && \
+    rm -rf rtcwpro_server.zip rtcwpro/qagame_mp_x86.dll && \
     mv rtcwpro /output/
 
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
