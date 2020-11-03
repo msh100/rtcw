@@ -4,12 +4,14 @@
 CONF_REDIR=${REDIRECTURL:-"http://homie1337.bestmail.ws/rtcw/rtcw%20maps"}
 CONF_PORT=${MAP_PORT:-27960}
 CONF_STARTMAP=${STARTMAP:-mp_ice}
-CONF_HOSTNAME=${HOSTNAME:-RTCW OSP}
+CONF_HOSTNAME=${HOSTNAME:-RTCW}
 CONF_MAXCLIENTS=${MAXCLIENTS:-32}
 CONF_PASSWORD=${PASSWORD:-""}
 CONF_RCONPASSWORD=${RCONPASSWORD:-""}
 CONF_REFPASSWORD=${REFEREEPASSWORD:-""}
 CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
+CONF_MOD=${MOD:-"osp"}
+CONF_PB_DISABLE=${PB_DISABLE:-""}
 
 GAME_BASE="/home/game"
 
@@ -40,6 +42,11 @@ if [ "${CONF_PASSWORD}" != "" ]; then
     CONF_NEEDPASS='set g_needpass "1"'
 fi
 
+# If PB_DISABLE is set, then let's not enable PB
+if [ "${CONF_PB_DISABLE}" == "" ]; then
+    CONF_PB='pb_sv_enable'
+fi
+
 # Iterate over all config variables and write them in place
 cp "${GAME_BASE}/main/server.cfg.tpl" "${GAME_BASE}/main/server.cfg"
 for var in "${!CONF_@}"; do
@@ -56,7 +63,7 @@ fi
 # Exec into the game
 exec "${GAME_BASE}/wolfded.x86" \
     +set dedicated 2 \
-    +set fs_game osp \
+    +set fs_game "${CONF_MOD}" \
     +set com_hunkmegs 512 \
     +set vm_game 0 \
     +set ttycon 0 \

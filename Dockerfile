@@ -34,6 +34,12 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     rm -rf rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
     mv osp /output/
 
+RUN wget http://rtcwpro.com/files/server/rtcwpro_server.zip && \
+    md5sum rtcwpro_server.zip | cut -d' ' -f1 | grep 646137a9e13ef819e1523bb4b86f7c90 && \
+    unzip rtcwpro_server.zip && \
+    rm -rf rm -rf rtcwpro_server.zip rtcwpro/qagame_mp_x86.dll && \
+    mv rtcwpro /output/
+
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \
     tar -xvf rtcw-pb.tar.gz && \
@@ -71,15 +77,13 @@ RUN wget http://archive.debian.org/debian/pool/main/g/gcc-2.95/libstdc++2.10-gli
 
 RUN useradd -ms /bin/bash game
 
-RUN mkdir -p /home/game/osp/logs && chown game:game /home/game/osp/logs
-VOLUME /home/game/osp/logs
-
 USER game
 WORKDIR /home/game
 
 COPY --chown=game:game --from=basegame /output/ /home/game
 
 COPY --chown=game:game mapscripts/* /home/game/osp/maps/
+RUN ln -s /home/game/osp/maps /home/game/rtcwpro/maps
 COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
 
 COPY --chown=game:game entrypoint.sh /home/game/start

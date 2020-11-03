@@ -2,9 +2,9 @@ RTCW Match Server
 =================
 
 This Docker image will download the required RTCW maps as specified in the
-`MAPS` environment variable (from `REDIRECTURL`) and then spawn an OSP server
-with configuration as defined in the environment variables or their defaults
-(refer below).
+`MAPS` environment variable (from `REDIRECTURL`) and then spawn an OSP or
+RtcwPro server with configuration as defined in the environment variables or
+their defaults (refer below).
 
 All logs are written to STDOUT so can be viewed from `docker logs` or run
 without the `-d` Docker run switch.
@@ -32,7 +32,7 @@ MAPS                 | List of maps seperated by ':'. | Default 6 maps
 PASSWORD             | Server password.               | No password.
 RCONPASSWORD         | RCON password.                 | No password (disabled).
 REFEREEPASSWORD      | Referee password.              | No password (disabled).
-HOSTNAME             | Server hostname.               | RTCW OSP
+HOSTNAME             | Server hostname.               | RTCW
 STARTMAP             | Map server starts on.          | "mp_ice".
 REDIRECTURL          | URL of HTTP downloads          | http://homie1337.bestmail.ws/rtcw/rtcw%20maps
 MAP_PORT             | Container port (internal)      | 27960
@@ -40,6 +40,8 @@ NOQUERY              | Disable status queries         | Disabled, set to `true` 
 MAXCLIENTS           | Maximum number of players      | 32
 CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
+MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
+PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
 
 
 Todo
