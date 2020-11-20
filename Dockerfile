@@ -35,7 +35,7 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     mv osp /output/
 
 RUN wget http://rtcwpro.com/files/server/rtcwpro_server.zip && \
-    md5sum rtcwpro_server.zip | cut -d' ' -f1 | grep 646137a9e13ef819e1523bb4b86f7c90 && \
+    md5sum rtcwpro_server.zip | cut -d' ' -f1 | grep a835511f6aa3417569bb00b45fcd3d9a && \
     unzip rtcwpro_server.zip && \
     rm -rf rtcwpro_server.zip rtcwpro/qagame_mp_x86.dll && \
     mv rtcwpro /output/
