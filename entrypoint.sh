@@ -60,8 +60,14 @@ if [ "${NOQUERY}" == "true" ]; then
     export LD_PRELOAD="${GAME_BASE}/libnoquery.so"
 fi
 
+# Rtcwpro uses a different binary which is provided in their package
+binary="wolfded.x86"
+if [ "${CONF_MOD}" == "rtcwpro" ]; then
+    binary="wolfded-rtcwpro.x86"
+fi
+
 # Exec into the game
-exec "${GAME_BASE}/wolfded.x86" \
+exec "${GAME_BASE}/${binary}" \
     +set dedicated 2 \
     +set fs_game "${CONF_MOD}" \
     +set com_hunkmegs 512 \

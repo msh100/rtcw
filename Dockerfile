@@ -15,7 +15,7 @@ RUN echo steam steam/question select "I AGREE" | debconf-set-selections && \
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y lib32gcc1 steamcmd libcurl4:i386 wget unzip bbe
+    apt-get install -y lib32gcc1 steamcmd libcurl4:i386 wget unzip bbe jq
 
 RUN /usr/games/steamcmd \
     +@sSteamCmdForcePlatformType windows \
@@ -34,11 +34,15 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
     mv osp /output/
 
-RUN wget http://rtcwpro.com/files/server/rtcwpro_server.zip && \
-    md5sum rtcwpro_server.zip | cut -d' ' -f1 | grep a835511f6aa3417569bb00b45fcd3d9a && \
-    unzip rtcwpro_server.zip && \
-    rm -rf rtcwpro_server.zip rtcwpro/qagame_mp_x86.dll && \
-    mv rtcwpro /output/
+RUN releases="$(wget -qO - https://api.github.com/repos/rtcw-nihi/ospx/releases/latest)" && \
+    asset="$(echo "${releases}" | jq '.assets[] | select(.name | test("^rtcwpro_server.+zip$"))')" && \
+    filename="$(echo "${asset}" | jq -r '.name')" && \
+    wget "$(echo "${asset}" | jq -r '.browser_download_url')" && \
+    unzip "${filename}" && \
+    rm -rf "${filename}" "rtcwpro/qagame_mp_x86.dll" && \
+    mv "wolfded.x86" "/output/wolfded-rtcwpro.x86" && \
+    chmod +x "/output/wolfded-rtcwpro.x86" && \
+    mv "rtcwpro" "/output/"
 
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \
