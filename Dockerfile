@@ -34,12 +34,12 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
     mv osp /output/
 
-RUN releases="$(wget -qO - https://api.github.com/repos/rtcw-nihi/ospx/releases/latest)" && \
-    asset="$(echo "${releases}" | jq '.assets[] | select(.name | test("^rtcwpro_server.+zip$"))')" && \
+RUN releases="$(wget -qO /tmp/rtcwpro.releases https://api.github.com/repos/rtcw-nihi/ospx/releases/latest)" && \
+    asset="$(jq '.assets[] | select(.name | test("^rtcwpro_server.+zip$"))' "/tmp/rtcwpro.releases")" && \
     filename="$(echo "${asset}" | jq -r '.name')" && \
     wget "$(echo "${asset}" | jq -r '.browser_download_url')" && \
     unzip "${filename}" && \
-    rm -rf "${filename}" "rtcwpro/qagame_mp_x86.dll" && \
+    rm -rf "${filename}" "rtcwpro/qagame_mp_x86.dll" "/tmp/rtcwpro.releases" && \
     mv "wolfded.x86" "/output/wolfded-rtcwpro.x86" && \
     chmod +x "/output/wolfded-rtcwpro.x86" && \
     mv "rtcwpro" "/output/"
