@@ -34,15 +34,8 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
     mv osp /output/
 
-RUN releases="$(wget -qO /tmp/rtcwpro.releases https://api.github.com/repos/rtcw-nihi/ospx/releases/latest)" && \
-    asset="$(jq '.assets[] | select(.name | test("^rtcwpro_server.+zip$"))' "/tmp/rtcwpro.releases")" && \
-    filename="$(echo "${asset}" | jq -r '.name')" && \
-    wget "$(echo "${asset}" | jq -r '.browser_download_url')" && \
-    unzip "${filename}" && \
-    rm -rf "${filename}" "rtcwpro/qagame_mp_x86.dll" "/tmp/rtcwpro.releases" && \
-    mv "wolfded.x86" "/output/wolfded-rtcwpro.x86" && \
-    chmod +x "/output/wolfded-rtcwpro.x86" && \
-    mv "rtcwpro" "/output/"
+ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "34659689"
 
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \
@@ -74,6 +67,11 @@ RUN dpkg --add-architecture i386 && \
     apt-get -y upgrade && \
     apt-get install -y wget libc6-i386 libc6:i386 unzip bbe
 
+RUN wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \
+    md5sum jq-linux64 | cut -d' ' -f1 | grep 1fffde9f3c7944f063265e9a5e67ae4f && \
+    mv jq-linux64 /usr/bin/jq && \
+    chmod +x /usr/bin/jq
+
 RUN wget http://archive.debian.org/debian/pool/main/g/gcc-2.95/libstdc++2.10-glibc2.2_2.95.4-27_i386.deb && \
     md5sum libstdc++2.10-glibc2.2_2.95.4-27_i386.deb | cut -d' ' -f1 | grep fa8e4293fa233399a2db248625355a77 && \
     dpkg -i libstdc++2.10-glibc2.2_2.95.4-27_i386.deb && \
@@ -87,7 +85,8 @@ WORKDIR /home/game
 COPY --chown=game:game --from=basegame /output/ /home/game
 
 COPY --chown=game:game mapscripts/* /home/game/osp/maps/
-RUN ln -s /home/game/osp/maps /home/game/rtcwpro/maps
+RUN mkdir -p /home/game/rtcwpro && \
+    ln -s /home/game/osp/maps /home/game/rtcwpro/maps
 COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
 
 COPY --chown=game:game entrypoint.sh /home/game/start

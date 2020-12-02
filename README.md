@@ -42,6 +42,7 @@ CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
 MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
 PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
+AUTO_UPDATE          | Download the `latest` RtcwPro release from Github on startup? | Disabled, set to `true` to enable.
 
 
 Todo

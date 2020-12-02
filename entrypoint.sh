@@ -63,11 +63,20 @@ fi
 # Rtcwpro uses a different binary which is provided in their package
 binary="wolfded.x86"
 if [ "${CONF_MOD}" == "rtcwpro" ]; then
-    binary="wolfded-rtcwpro.x86"
+    if [ "${AUTO_UPDATE:-"0"}" == "true" ]; then
+        rtcwprobase="${GAME_BASE}/rtcwpro-autoupdate"
+        datapath="${rtcwprobase}" bash "${GAME_BASE}/fetchRtcwPro.sh" "latest"
+    else
+        rtcwprobase="${GAME_BASE}/rtcwpro-data"
+    fi
+
+    ln -sf "${rtcwprobase}/rtcwpro/qagame.mp.i386.so" "${GAME_BASE}/rtcwpro/"
+    ln -sf "${rtcwprobase}/rtcwpro/rtcwpro_"*.pk3 "${GAME_BASE}/rtcwpro/"
+    binary="${rtcwprobase}/rtcwpro/wolfded.x86"
 fi
 
 # Exec into the game
-exec "${GAME_BASE}/${binary}" \
+exec "${binary}" \
     +set dedicated 2 \
     +set fs_game "${CONF_MOD}" \
     +set com_hunkmegs 512 \
