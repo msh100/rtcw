@@ -61,7 +61,7 @@ if [ "${NOQUERY}" == "true" ]; then
 fi
 
 # Rtcwpro uses a different binary which is provided in their package
-binary="wolfded.x86"
+binary="${GAME_BASE}/wolfded.x86"
 if [ "${CONF_MOD}" == "rtcwpro" ]; then
     if [ "${AUTO_UPDATE:-"0"}" == "true" ]; then
         rtcwprobase="${GAME_BASE}/rtcwpro-autoupdate"
