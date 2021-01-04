@@ -55,6 +55,11 @@ for var in "${!CONF_@}"; do
 done
 sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
 
+# Appent extra.cfg if it exists
+if [ -f "${GAME_BASE}/extra.cfg" ]; then
+    cat "${GAME_BASE}/extra.cfg" >> "${GAME_BASE}/main/server.cfg"
+fi
+
 # Preload libnoquery if we want to block status queries
 if [ "${NOQUERY}" == "true" ]; then
     export LD_PRELOAD="${GAME_BASE}/libnoquery.so"

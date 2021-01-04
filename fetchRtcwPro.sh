@@ -7,7 +7,7 @@ desiredrelease=$1
 wget -O "/tmp/rtcwpro.releases" "https://api.github.com/repos/rtcw-nihi/ospx/releases/${desiredrelease}"
 
 # Determine file name and source of RtcwPro
-asset="$(jq '.assets[] | select(.name | test("^rtcwpro_server.+zip$"))' "/tmp/rtcwpro.releases")"
+asset="$(jq '.assets[] | select(.name | test("^rtcwpro_[0-9]+_server.+zip$"))' "/tmp/rtcwpro.releases")"
 filename="$(echo "${asset}" | jq -r '.name')"
 
 # Download and extract asset

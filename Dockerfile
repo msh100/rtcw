@@ -35,7 +35,7 @@ RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
     mv osp /output/
 
 ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
-RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "34659689"
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "35955709"
 
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \

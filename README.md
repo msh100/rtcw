@@ -44,6 +44,11 @@ MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
 PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
 AUTO_UPDATE          | Download the `latest` RtcwPro release from Github on startup? | Disabled, set to `true` to enable.
 
+Extra configuration can be prepended to the `server.cfg` by mounting a
+configuration at `/home/game/extra.cfg`.
+This is generally not recommended, try to use the variables above where
+possible.
+
 
 Todo
 ----
