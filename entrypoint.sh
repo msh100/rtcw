@@ -21,7 +21,12 @@ export IFS=":"
 for map in $MAPS; do
     if [ ! -f "${GAME_BASE}/main/${map}.pk3" ]; then
         echo "Attempting to download ${map}"
-        wget -O "${GAME_BASE}/main/${map}.pk3.tmp" "${CONF_REDIR}/$map.pk3"
+        if [ -f "/maps/${map}.pk3" ]; then
+            echo "Map ${map} is sourcable locally, copying into place"
+            cp "/maps/${map}.pk3" "${GAME_BASE}/main/${map}.pk3.tmp"
+        else
+            wget -O "${GAME_BASE}/main/${map}.pk3.tmp" "${CONF_REDIR}/$map.pk3"
+        fi
 
         mkdir -p "${GAME_BASE}/tmp/"
         unzip "${GAME_BASE}/main/${map}.pk3.tmp" -d "${GAME_BASE}/tmp/"

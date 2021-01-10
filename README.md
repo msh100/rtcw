@@ -6,6 +6,11 @@ This Docker image will download the required RTCW maps as specified in the
 RtcwPro server with configuration as defined in the environment variables or
 their defaults (refer below).
 
+If you want to avoid downloading maps over HTTP(s), you can mount a volume of
+maps to `/maps/`.
+The container will first try to copy from pk3s from this directory before
+attempting an HTTP(s) download.
+
 All logs are written to STDOUT so can be viewed from `docker logs` or run
 without the `-d` Docker run switch.
 
