@@ -74,6 +74,9 @@ fi
 binary="${GAME_BASE}/wolfded.x86"
 if [ "${CONF_MOD}" == "rtcwpro" ]; then
     if [ "${AUTO_UPDATE:-"0"}" == "true" ]; then
+        # TODO: We need to add logic here to keep the newest version (be that
+        # from the image or from a previous autoupdate) in the event that an
+        # auto update fails.
         rtcwprobase="${GAME_BASE}/rtcwpro-autoupdate"
         datapath="${rtcwprobase}" bash "${GAME_BASE}/fetchRtcwPro.sh" "latest"
     else
