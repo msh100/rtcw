@@ -88,6 +88,7 @@ COPY --chown=game:game mapscripts/* /home/game/osp/maps/
 RUN mkdir -p /home/game/rtcwpro && \
     ln -s /home/game/osp/maps /home/game/rtcwpro/maps
 COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
+COPY --chown=game:game configs/ /home/game/rtcwpro/configs/
 
 COPY --chown=game:game entrypoint.sh /home/game/start
 RUN chmod +x /home/game/start
