@@ -85,6 +85,7 @@ WORKDIR /home/game
 COPY --chown=game:game --from=basegame /output/ /home/game
 
 COPY --chown=game:game mapscripts/* /home/game/osp/maps/
+COPY --chown=game:game map-mutations/* /home/game/map-mutations/
 RUN mkdir -p /home/game/rtcwpro && \
     ln -s /home/game/osp/maps /home/game/rtcwpro/maps
 COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl

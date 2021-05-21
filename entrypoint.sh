@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set config defaults
-CONF_REDIR=${REDIRECTURL:-"http://homie1337.bestmail.ws/rtcw/rtcw%20maps"}
+CONF_REDIR=${REDIRECTURL:-"http://rtcw.life/files/mapdb"}
 CONF_PORT=${MAP_PORT:-27960}
 CONF_STARTMAP=${STARTMAP:-mp_ice}
 CONF_HOSTNAME=${HOSTNAME:-RTCW}
@@ -17,7 +17,6 @@ CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 GAME_BASE="/home/game"
 
 # Iterate over all maps and download them if necessary
-# We will also strip out potential barrels (bug) at this point.
 export IFS=":"
 for map in $MAPS; do
     if [ ! -f "${GAME_BASE}/main/${map}.pk3" ]; then
@@ -29,19 +28,54 @@ for map in $MAPS; do
             wget -O "${GAME_BASE}/main/${map}.pk3.tmp" "${CONF_REDIR}/$map.pk3"
         fi
 
+        # This is the place we run mutations on the BSPs contained within maps.
         mkdir -p "${GAME_BASE}/tmp/"
         unzip "${GAME_BASE}/main/${map}.pk3.tmp" -d "${GAME_BASE}/tmp/"
+        map_mutated=0
+
+        # If an exploding barrel gibs a player, the server will crash.
+        # To remedy this we remove all exploding barrels.
         if grep "props_flamebarrel" "${GAME_BASE}/tmp/maps/${map}.bsp"; then
             echo "props_flamebarrel found in ${map} - removing it."
             bbe -e \
                 's/props_flamebarrel/props_flamebar111/' \
                 "${GAME_BASE}/tmp/maps/${map}.bsp" > \
+                "${GAME_BASE}/tmp/maps/${map}.bsp.tmp"
+            mv "${GAME_BASE}/tmp/maps/${map}.bsp.tmp" \
+                "${GAME_BASE}/tmp/maps/${map}.bsp"
+            map_mutated=1
+        fi
+
+        # Check if a map mutations script exist for this map and execute it
+        if [ -f "${GAME_BASE}/map-mutations/${map}.sh" ]; then
+            echo "Running mutations script on ${map}"
+            bash "${GAME_BASE}/map-mutations/${map}.sh" \
+                "${GAME_BASE}/tmp/maps/${map}.bsp"
+            map_mutated=1
+        fi
+
+        # If we have made mutations to the map file, then we should move the
+        # new BSP into the osp maps directory (This is symlinked in for
+        # RtcwPro within the main Dockerfile).
+        if [[ "${map_mutated}" == "1" ]]; then
+            mv "${GAME_BASE}/tmp/maps/${map}.bsp" \
                 "${GAME_BASE}/osp/maps/${map}.bsp"
         fi
+
         rm -rf "${GAME_BASE}/tmp/"
         mv "${GAME_BASE}/main/${map}.pk3.tmp" "${GAME_BASE}/main/${map}.pk3"
     fi
 done
+
+# mp_ice is included as part of RTCW so we always run this mutation
+# TODO: We should MD5 this as to not run this on every launch.
+# TODO: There should be a list of BSPs included in base PK3s to interate over.
+echo "Running mutations on mp_ice"
+mkdir -p "${GAME_BASE}/tmp/"
+unzip "${GAME_BASE}/main/mp_pakmaps1.pk3" -d "${GAME_BASE}/tmp/"
+bash "${GAME_BASE}/map-mutations/mp_ice.sh" "${GAME_BASE}/tmp/maps/mp_ice.bsp"
+mv "${GAME_BASE}/tmp/maps/mp_ice.bsp" "${GAME_BASE}/osp/maps/mp_ice.bsp"
+rm -rf "${GAME_BASE}/tmp/"
 
 # We need to set g_needpass if a password is set
 if [ "${CONF_PASSWORD}" != "" ]; then

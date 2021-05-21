@@ -39,7 +39,7 @@ RCONPASSWORD         | RCON password.                 | No password (disabled).
 REFEREEPASSWORD      | Referee password.              | No password (disabled).
 HOSTNAME             | Server hostname.               | RTCW
 STARTMAP             | Map server starts on.          | "mp_ice".
-REDIRECTURL          | URL of HTTP downloads          | http://homie1337.bestmail.ws/rtcw/rtcw%20maps
+REDIRECTURL          | URL of HTTP downloads          | http://rtcw.life/files/mapdb
 MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
