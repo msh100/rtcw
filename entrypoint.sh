@@ -16,6 +16,8 @@ CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 
 GAME_BASE="/home/game"
 
+source "${GAME_BASE}/tools.sh"
+
 # Iterate over all maps and download them if necessary
 export IFS=":"
 for map in $MAPS; do

@@ -92,6 +92,7 @@ COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
 COPY --chown=game:game configs/ /home/game/rtcwpro/configs/
 
 COPY --chown=game:game entrypoint.sh /home/game/start
+COPY --chown=game:game tools.sh /home/game/
 RUN chmod +x /home/game/start
 
 EXPOSE 27960/udp
