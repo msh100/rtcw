@@ -53,11 +53,6 @@ RUN wget https://msh100.uk/files/rtcw-binaries.tar.gz && \
 RUN wget https://msh100.uk/files/libnoquery.so && \
     md5sum libnoquery.so | cut -d' ' -f1 | grep 91d9c6fd56392c60461c996ca29d6467
 
-RUN mkdir /barrelfix/ /output/osp/maps/ && \
-    unzip /gamefiles/Main/mp_pak0.pk3 -d /barrelfix/ && \
-    bbe -e 's/props_flamebarrel/props_flamebar111/' /barrelfix/maps/mp_base.bsp > /output/osp/maps/mp_base.bsp && \
-    bbe -e 's/props_flamebarrel/props_flamebar111/' /barrelfix/maps/mp_assault.bsp > /output/osp/maps/mp_assault.bsp
-
 FROM ubuntu:14.04
 MAINTAINER Marcus Hughes <hello@msh100.uk>
 
@@ -65,7 +60,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get -y upgrade && \
-    apt-get install -y wget libc6-i386 libc6:i386 unzip bbe
+    apt-get install -y wget libc6-i386 libc6:i386 unzip bbe git
 
 RUN wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \
     md5sum jq-linux64 | cut -d' ' -f1 | grep 1fffde9f3c7944f063265e9a5e67ae4f && \
@@ -84,15 +79,12 @@ WORKDIR /home/game
 
 COPY --chown=game:game --from=basegame /output/ /home/game
 
-COPY --chown=game:game mapscripts/* /home/game/osp/maps/
-COPY --chown=game:game map-mutations/* /home/game/map-mutations/
 RUN mkdir -p /home/game/rtcwpro && \
     ln -s /home/game/osp/maps /home/game/rtcwpro/maps
-COPY --chown=game:game server.cfg /home/game/main/server.cfg.tpl
-COPY --chown=game:game configs/ /home/game/rtcwpro/configs/
+RUN git clone --depth 1 "https://github.com/msh100/rtcw-config.git" \
+    /home/game/settings/
 
 COPY --chown=game:game entrypoint.sh /home/game/start
-COPY --chown=game:game tools.sh /home/game/
 RUN chmod +x /home/game/start
 
 EXPOSE 27960/udp

@@ -1,5 +1,4 @@
-RTCW Match Server
-=================
+# RTCW Match Server
 
 This Docker image will download the required RTCW maps as specified in the
 `MAPS` environment variable (from `REDIRECTURL`) and then spawn an OSP or
@@ -16,8 +15,13 @@ without the `-d` Docker run switch.
 
 A server with this image will run v1.41b.
 
-Example
--------
+A container using this image will always try and download the latest changes
+from whatever `SETTINGSURL` is set to.
+By default this is the [rtcw-config](https://github.com/msh100/rtcw-config)
+repository.
+
+
+## Example
 
 ```
 docker run -d \
@@ -28,35 +32,42 @@ docker run -d \
   msh100/rtcw
 ```
 
-Configuration Options
----------------------
+
+## Configuration Options
+
 
 Environment Variable | Description                    | Defaults
 -------------------- | ------------------------------ | ------------------------
 MAPS                 | List of maps seperated by ':'. | Default 6 maps
-PASSWORD             | Server password.               | No password.
-RCONPASSWORD         | RCON password.                 | No password (disabled).
-REFEREEPASSWORD      | Referee password.              | No password (disabled).
-HOSTNAME             | Server hostname.               | RTCW
 STARTMAP             | Map server starts on.          | "mp_ice".
 REDIRECTURL          | URL of HTTP downloads          | http://rtcw.life/files/mapdb
 MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
+MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
+AUTO_UPDATE          | Download the `latest` RtcwPro release from Github and latest configuration set on startup? | Disabled, set to `true` to enable.
+SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. `AUTO_UPDATE` **must** be set to `true` to use this feature. | https://github.com/msh100/rtcw-config.git
+
+
+### Configuration parameters for the default `SETTINGSURL`
+
+Environment Variable | Description                    | Defaults
+-------------------- | ------------------------------ | ------------------------
+PASSWORD             | Server password.               | No password.
+RCONPASSWORD         | RCON password.                 | No password (disabled).
+REFEREEPASSWORD      | Referee password.              | No password (disabled).
+HOSTNAME             | Server hostname.               | RTCW
 CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
-MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
 PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
-AUTO_UPDATE          | Download the `latest` RtcwPro release from Github on startup? | Disabled, set to `true` to enable.
 SERVERCONF           | The value for RtcwPro's `g_customconfig` | `defaultcomp`.
 
 Extra configuration can be prepended to the `server.cfg` by mounting a
 configuration at `/home/game/extra.cfg`.
 This is generally not recommended, try to use the variables above where
-possible.
+possible or create a custom `SETTINGSURL`.
 
 
-Todo
-----
+## Todo
 
  - `main/qagamei386.so` and `wolfded.x86` come from my webserver. Is there a better source for these?
