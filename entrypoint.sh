@@ -21,7 +21,7 @@ GAME_BASE="/home/game"
 SETTINGS_BASE="${GAME_BASE}/settings"
 
 # Update the configs git directory
-if [ "${AUTO_UPDATE}" == "true" ]; then
+if [ "${AUTO_UPDATE}" == "true" ] || [ -n "${SETTINGSURL}" ]; then
     echo "Checking if any configuration updates exist to pull"
     if git clone --depth 1 "${CONF_SETTINGSGIT}" "${SETTINGS_BASE}.new"; then
         rm -rf "${SETTINGS_BASE}"

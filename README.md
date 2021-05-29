@@ -46,7 +46,7 @@ NOQUERY              | Disable status queries         | Disabled, set to `true` 
 MAXCLIENTS           | Maximum number of players      | 32
 MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
 AUTO_UPDATE          | Download the `latest` RtcwPro release from Github and latest configuration set on startup? | Disabled, set to `true` to enable.
-SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. `AUTO_UPDATE` **must** be set to `true` to use this feature. | https://github.com/msh100/rtcw-config.git
+SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. If defined, the server will always fetch this on startup, regardless of the `AUTO_UPDATE` value. | https://github.com/msh100/rtcw-config.git
 
 
 ### Configuration parameters for the default `SETTINGSURL`
