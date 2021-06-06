@@ -80,7 +80,8 @@ WORKDIR /home/game
 COPY --chown=game:game --from=basegame /output/ /home/game
 
 RUN mkdir -p /home/game/rtcwpro && \
-    ln -s /home/game/osp/maps /home/game/rtcwpro/maps
+    ln -s /home/game/osp/maps /home/game/rtcwpro/maps && \
+    ln -s /home/game/osp/configs /home/game/rtcwpro/configs
 RUN git clone --depth 1 "https://github.com/msh100/rtcw-config.git" \
     /home/game/settings/
 
