@@ -14,8 +14,9 @@ CONF_MOD=${MOD:-"osp"}
 CONF_PB_DISABLE=${PB_DISABLE:-""}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/msh100/rtcw-config.git"}
+CONF_SETTINGSBRANCH=${SETTINGSBRANCH:-"master"}
 
-AUTO_UPDATE=${AUTO_UPDATE:-"0"}
+AUTO_UPDATE=${AUTO_UPDATE:-"true"}
 
 GAME_BASE="/home/game"
 SETTINGS_BASE="${GAME_BASE}/settings"
@@ -23,7 +24,7 @@ SETTINGS_BASE="${GAME_BASE}/settings"
 # Update the configs git directory
 if [ "${AUTO_UPDATE}" == "true" ] || [ -n "${SETTINGSURL}" ]; then
     echo "Checking if any configuration updates exist to pull"
-    if git clone --depth 1 "${CONF_SETTINGSGIT}" "${SETTINGS_BASE}.new"; then
+    if git clone --depth 1 --single-branch --branch "${CONF_SETTINGSBRANCH}" "${CONF_SETTINGSGIT}" "${SETTINGS_BASE}.new"; then
         rm -rf "${SETTINGS_BASE}"
         mv "${SETTINGS_BASE}.new" "${SETTINGS_BASE}"
     else

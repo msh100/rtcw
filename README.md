@@ -45,8 +45,9 @@ MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
 MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
-AUTO_UPDATE          | Download the `latest` RtcwPro release from Github and latest configuration set on startup? | Disabled, set to `true` to enable.
+AUTO_UPDATE          | Download the `latest` RtcwPro release from Github and latest configuration set on startup? | Enabled, set to `false` to enable.
 SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. If defined, the server will always fetch this on startup, regardless of the `AUTO_UPDATE` value. | https://github.com/msh100/rtcw-config.git
+SETTINGSBRANCH       | The git branch for the RTCW settings repository. | `master`
 
 
 ### Configuration parameters for the default `SETTINGSURL`
