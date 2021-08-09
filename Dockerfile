@@ -76,7 +76,7 @@ WORKDIR /home/game
 
 COPY --chown=game:game --from=basegame /output/ /home/game
 
-RUN git clone --depth 1 "https://github.com/msh100/rtcw-config.git" \
+RUN git clone --depth 1 "https://github.com/acelad88/rtcw-config.git" \
     /home/game/settings/
 
 COPY --chown=game:game entrypoint.sh /home/game/start
