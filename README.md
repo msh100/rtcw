@@ -1,8 +1,8 @@
 # RTCW Match Server
 
 This Docker image will download the required RTCW maps as specified in the
-`MAPS` environment variable (from `REDIRECTURL`) and then spawn an OSP or
-RtcwPro server with configuration as defined in the environment variables or
+`MAPS` environment variable (from `REDIRECTURL`) and then spawn an RtcwPro
+1.2.1 server with configuration as defined in the environment variables or
 their defaults (refer below).
 
 If you want to avoid downloading maps over HTTP(s), you can mount a volume of
@@ -44,9 +44,8 @@ REDIRECTURL          | URL of HTTP downloads          | http://rtcw.life/files/m
 MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
-MOD                  | The mod to run, either `osp` or `rtcwpro`. | `osp`
-AUTO_UPDATE          | Download the `latest` RtcwPro release from Github and latest configuration set on startup? | Enabled, set to `false` to enable.
-SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. If defined, the server will always fetch this on startup, regardless of the `AUTO_UPDATE` value. | https://github.com/msh100/rtcw-config.git
+AUTO_UPDATE          | Update configurations on restart? | Enabled, set to `false` to enable.
+SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. | https://github.com/msh100/rtcw-config.git
 SETTINGSBRANCH       | The git branch for the RTCW settings repository. | `master`
 
 
@@ -71,4 +70,5 @@ possible or create a custom `SETTINGSURL`.
 
 ## Todo
 
- - `main/qagamei386.so` and `wolfded.x86` come from my webserver. Is there a better source for these?
+ - `main/qagamei386.so` comes from my webserver. Is there a better source for
+ this?

@@ -10,7 +10,6 @@ CONF_PASSWORD=${PASSWORD:-""}
 CONF_RCONPASSWORD=${RCONPASSWORD:-""}
 CONF_REFPASSWORD=${REFEREEPASSWORD:-""}
 CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
-CONF_MOD=${MOD:-"osp"}
 CONF_PB_DISABLE=${PB_DISABLE:-""}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/msh100/rtcw-config.git"}
@@ -22,7 +21,7 @@ GAME_BASE="/home/game"
 SETTINGS_BASE="${GAME_BASE}/settings"
 
 # Update the configs git directory
-if [ "${AUTO_UPDATE}" == "true" ] || [ -n "${SETTINGSURL}" ]; then
+if [ "${AUTO_UPDATE}" == "true" ]; then
     echo "Checking if any configuration updates exist to pull"
     if git clone --depth 1 --single-branch --branch "${CONF_SETTINGSBRANCH}" "${CONF_SETTINGSGIT}" "${SETTINGS_BASE}.new"; then
         rm -rf "${SETTINGS_BASE}"
@@ -77,9 +76,9 @@ run_mutations() {
     fi
 
     if [ "${map_mutated}" == "1" ]; then
-        mkdir -p "${GAME_BASE}/osp/maps"
+        mkdir -p "${GAME_BASE}/rtcwpro/maps"
         mv "${GAME_BASE}/tmp/maps/${map}.bsp" \
-            "${GAME_BASE}/osp/maps/${map}.bsp"
+            "${GAME_BASE}/rtcwpro/maps/${map}.bsp"
     else
         echo "No mutations were made to ${map}"
     fi
@@ -109,7 +108,7 @@ for map in $MAPS; do
     fi
 
     # This is the place we run mutations on the BSPs contained within maps.
-    rm -rf "${GAME_BASE}/osp/maps/${map}.bsp"
+    rm -rf "${GAME_BASE}/rtcwpro/maps/${map}.bsp"
     mkdir -p "${GAME_BASE}/tmp/"
     unzip "${GAME_BASE}/main/${map}.pk3" -d "${GAME_BASE}/tmp/"
 
@@ -120,7 +119,7 @@ done
 
 # We need to still run mutations on default maps if they exist.
 for map in "${!default_maps[@]}"; do
-    rm -rf "${GAME_BASE}/osp/maps/${map}.bsp"
+    rm -rf "${GAME_BASE}/rtcwpro/maps/${map}.bsp"
 
     echo "Running mutations on default map ${map}"
     mkdir -p "${GAME_BASE}/tmp/maps/"
@@ -136,21 +135,21 @@ done
 
 # We need to cleanup mapscripts on every invokation as we don't know what is
 # going to exist in the settings directory.
-for mapscript in "${GAME_BASE}/osp/maps/"*.script; do
+for mapscript in "${GAME_BASE}/rtcwpro/maps/"*.script; do
     [ -f "${mapscript}" ] || break
     rm -rf "${mapscript}"
 done
 
 for mapscript in "${SETTINGS_BASE}/mapscripts/"*.script; do
     [ -f "${mapscript}" ] || break
-    cp "${mapscript}" "${GAME_BASE}/osp/maps/"
+    cp "${mapscript}" "${GAME_BASE}/rtcwpro/maps/"
 done
 
 # Only configs live within the config directory so we don't need to be careful
 # about just recreating this directory.
-rm -rf "${GAME_BASE}/osp/configs/"
-mkdir -p "${GAME_BASE}/osp/configs/"
-cp "${SETTINGS_BASE}/configs/"*.config "${GAME_BASE}/osp/configs/"
+rm -rf "${GAME_BASE}/rtcwpro/configs/"
+mkdir -p "${GAME_BASE}/rtcwpro/configs/"
+cp "${SETTINGS_BASE}/configs/"*.config "${GAME_BASE}/rtcwpro/configs/"
 
 # We need to set g_needpass if a password is set
 if [ "${CONF_PASSWORD}" != "" ]; then
@@ -170,7 +169,14 @@ for var in "${!CONF_@}"; do
 done
 sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
 
-# Appent extra.cfg if it exists
+cp "${SETTINGS_BASE}/mod.cfg" "${GAME_BASE}/main/mod.cfg"
+for var in "${!CONF_@}"; do
+    value=$(echo "${!var}" | sed 's/\//\\\//g')
+    sed -i "s/%${var}%/${value}/g" "${GAME_BASE}/main/mod.cfg"
+done
+sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
+
+# Append extra.cfg if it exists
 if [ -f "${GAME_BASE}/extra.cfg" ]; then
     cat "${GAME_BASE}/extra.cfg" >> "${GAME_BASE}/main/server.cfg"
 fi
@@ -182,26 +188,11 @@ fi
 
 # Rtcwpro uses a different binary which is provided in their package
 binary="${GAME_BASE}/wolfded.x86"
-if [ "${CONF_MOD}" == "rtcwpro" ]; then
-    if [ "${AUTO_UPDATE}" == "true" ]; then
-        # TODO: We need to add logic here to keep the newest version (be that
-        # from the image or from a previous autoupdate) in the event that an
-        # auto update fails.
-        rtcwprobase="${GAME_BASE}/rtcwpro-autoupdate"
-        datapath="${rtcwprobase}" bash "${GAME_BASE}/fetchRtcwPro.sh" "latest"
-    else
-        rtcwprobase="${GAME_BASE}/rtcwpro-data"
-    fi
-
-    ln -sf "${rtcwprobase}/rtcwpro/qagame.mp.i386.so" "${GAME_BASE}/rtcwpro/"
-    ln -sf "${rtcwprobase}/rtcwpro/rtcwpro_"*.pk3 "${GAME_BASE}/rtcwpro/"
-    binary="${rtcwprobase}/rtcwpro/wolfded.x86"
-fi
 
 # Exec into the game
 exec "${binary}" \
     +set dedicated 2 \
-    +set fs_game "${CONF_MOD}" \
+    +set fs_game "rtcwpro" \
     +set com_hunkmegs 512 \
     +set vm_game 0 \
     +set ttycon 0 \

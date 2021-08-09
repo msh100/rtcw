@@ -28,14 +28,11 @@ RUN mkdir -p /output/main/ && \
     cp /gamefiles/Main/mp_*.pk3 /output/main/ && \
     cp /gamefiles/Main/pak0.pk3 /output/main/
 
-RUN wget http://osp.dget.cc/orangesmoothie/downloads/osp-wolf-0.9.zip && \
-    md5sum osp-wolf-0.9.zip | cut -d' ' -f1 | grep 835eea094b832dc48a4d8329ce5290ba && \
-    unzip osp-wolf-0.9.zip && \
-    rm -rf osp-wolf-0.9.zip osp/Docs/ osp/*.txt osp/*.cfg && \
-    mv osp /output/
-
 ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
-RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "36772867"
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "47509596" && \
+    mv /output/rtcwpro-data/rtcwpro /output/ && \
+    mv /output/rtcwpro-data/wolfded.x86 /output/ && \
+    rm -rf /output/rtcwpro-data
 
 RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \
@@ -48,7 +45,7 @@ RUN unzip /output/main/mp_bin.pk3 -d /output/main && \
 RUN wget https://msh100.uk/files/rtcw-binaries.tar.gz && \
     md5sum rtcw-binaries.tar.gz | cut -d' ' -f1 | grep 29ecb883c5657d3620a7d2dec7a0657f && \
     tar -xvf rtcw-binaries.tar.gz && \
-    cp -r binaries/* /output/
+    cp -r binaries/main/* /output/main/
 
 RUN wget https://msh100.uk/files/libnoquery.so && \
     md5sum libnoquery.so | cut -d' ' -f1 | grep 91d9c6fd56392c60461c996ca29d6467
@@ -79,9 +76,6 @@ WORKDIR /home/game
 
 COPY --chown=game:game --from=basegame /output/ /home/game
 
-RUN mkdir -p /home/game/rtcwpro && \
-    ln -s /home/game/osp/maps /home/game/rtcwpro/maps && \
-    ln -s /home/game/osp/configs /home/game/rtcwpro/configs
 RUN git clone --depth 1 "https://github.com/msh100/rtcw-config.git" \
     /home/game/settings/
 
