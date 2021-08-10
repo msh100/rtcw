@@ -9,6 +9,7 @@ CONF_MAXCLIENTS=${MAXCLIENTS:-32}
 CONF_PASSWORD=${PASSWORD:-""}
 CONF_RCONPASSWORD=${RCONPASSWORD:-""}
 CONF_REFPASSWORD=${REFEREEPASSWORD:-""}
+CONF_SCPASSWORD=${SCPASSWORD:-""}
 CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
 CONF_PB_DISABLE=${PB_DISABLE:-""}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
@@ -201,6 +202,7 @@ exec "${binary}" \
     +set sv_maxclients "${CONF_MAXCLIENTS}" \
     +set fs_basepath "${GAME_BASE}" \
     +set fs_homepath "${GAME_BASE}" \
+    +set sv_GameConfig "${CONF_SERVERCONF}" \
     +exec "server.cfg" \
     +map "${CONF_STARTMAP}" \
     "${@}"

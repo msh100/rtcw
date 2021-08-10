@@ -56,6 +56,7 @@ Environment Variable | Description                    | Defaults
 PASSWORD             | Server password.               | No password.
 RCONPASSWORD         | RCON password.                 | No password (disabled).
 REFEREEPASSWORD      | Referee password.              | No password (disabled).
+SCPASSWORD           | Shoutcaster password.          | No password (disabled).
 HOSTNAME             | Server hostname.               | RTCW
 CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
