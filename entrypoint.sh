@@ -16,6 +16,8 @@ CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/acelad88/rtcw-config.git"}
 CONF_SETTINGSBRANCH=${SETTINGSBRANCH:-"master"}
 CONF_CHECKVERSION="10"
+CONF_STATS_SUBMIT=${STATS_SUBMIT:-"0"}
+CONF_STATS_URL=${STATS_URL:-"https://rtcwproapi.donkanator.com/submit"}
 
 AUTO_UPDATE=${AUTO_UPDATE:-"true"}
 

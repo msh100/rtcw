@@ -47,6 +47,8 @@ MAXCLIENTS           | Maximum number of players      | 32
 AUTO_UPDATE          | Update configurations on restart? | Enabled, set to `false` to enable.
 SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. | https://github.com/msh100/rtcw-config.git
 SETTINGSBRANCH       | The git branch for the RTCW settings repository. | `master`
+STATS_SUBMIT         | Push stats to an external API? | Disabled, set to `1` to enable.
+STATS_URL            | API address to push stats data | `https://rtcwproapi.donkanator.com/submit`
 
 
 ### Configuration parameters for the default `SETTINGSURL`
