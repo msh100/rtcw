@@ -32,6 +32,7 @@ rm -rf \
     "${datapath}/wolfDED.exe" \
     "${datapath}/maps" \
     "${datapath}/configs" \
+    "${datapath}/mapConfigs" \
     "${datapath}/rtcwpro/"*.cfg \
     "/tmp/rtcwpro.releases"
 

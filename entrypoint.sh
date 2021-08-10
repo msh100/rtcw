@@ -15,6 +15,7 @@ CONF_PB_DISABLE=${PB_DISABLE:-""}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/acelad88/rtcw-config.git"}
 CONF_SETTINGSBRANCH=${SETTINGSBRANCH:-"master"}
+CONF_CHECKVERSION="10"
 
 AUTO_UPDATE=${AUTO_UPDATE:-"true"}
 
@@ -148,9 +149,10 @@ done
 
 # Only configs live within the config directory so we don't need to be careful
 # about just recreating this directory.
-rm -rf "${GAME_BASE}/rtcwpro/configs/"
-mkdir -p "${GAME_BASE}/rtcwpro/configs/"
+rm -rf "${GAME_BASE}/rtcwpro/configs/" "${GAME_BASE}/rtcwpro/mapConfigs/"
+mkdir -p "${GAME_BASE}/rtcwpro/configs/" "${GAME_BASE}/rtcwpro/mapConfigs/"
 cp "${SETTINGS_BASE}/configs/"*.config "${GAME_BASE}/rtcwpro/configs/"
+cp "${SETTINGS_BASE}/mapConfigs/"*.cfg "${GAME_BASE}/rtcwpro/mapConfigs/"
 
 # We need to set g_needpass if a password is set
 if [ "${CONF_PASSWORD}" != "" ]; then
