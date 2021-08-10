@@ -58,7 +58,7 @@ RCONPASSWORD         | RCON password.                 | No password (disabled).
 REFEREEPASSWORD      | Referee password.              | No password (disabled).
 SCPASSWORD           | Shoutcaster password.          | No password (disabled).
 HOSTNAME             | Server hostname.               | RTCW
-CONF_MOTDA, CONF_MOTDB, CONF_MOTDC | MOTD lines on connect | Empty.
+CONF_MOTD            | MOTD line on connect           | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
 PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
 SERVERCONF           | The value for RtcwPro's `g_customconfig` | `defaultcomp`.
