@@ -172,13 +172,6 @@ for var in "${!CONF_@}"; do
 done
 sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
 
-cp "${SETTINGS_BASE}/mod.cfg" "${GAME_BASE}/main/mod.cfg"
-for var in "${!CONF_@}"; do
-    value=$(echo "${!var}" | sed 's/\//\\\//g')
-    sed -i "s/%${var}%/${value}/g" "${GAME_BASE}/main/mod.cfg"
-done
-sed -i "s/%CONF_[A-Z]*%//g" "${GAME_BASE}/main/server.cfg"
-
 # Append extra.cfg if it exists
 if [ -f "${GAME_BASE}/extra.cfg" ]; then
     cat "${GAME_BASE}/extra.cfg" >> "${GAME_BASE}/main/server.cfg"
