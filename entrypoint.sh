@@ -200,6 +200,7 @@ exec "${binary}" \
     +set fs_basepath "${GAME_BASE}" \
     +set fs_homepath "${GAME_BASE}" \
     +set sv_GameConfig "${CONF_SERVERCONF}" \
+    +set sv_authenabled 0 \
     +exec "server.cfg" \
     +map "${CONF_STARTMAP}" \
     "${@}"
