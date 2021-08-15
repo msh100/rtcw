@@ -201,6 +201,7 @@ exec "${binary}" \
     +set fs_homepath "${GAME_BASE}" \
     +set sv_GameConfig "${CONF_SERVERCONF}" \
     +set sv_authenabled 0 \
+    +set sv_AuthStrictMode 0 \
     +exec "server.cfg" \
     +map "${CONF_STARTMAP}" \
     "${@}"
