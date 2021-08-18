@@ -47,8 +47,6 @@ MAXCLIENTS           | Maximum number of players      | 32
 AUTO_UPDATE          | Update configurations on restart? | Enabled, set to `false` to enable.
 SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. | https://github.com/msh100/rtcw-config.git
 SETTINGSBRANCH       | The git branch for the RTCW settings repository. | `master`
-STATS_SUBMIT         | Push stats to an external API? | Disabled, set to `1` to enable.
-STATS_URL            | API address to push stats data | `https://rtcwproapi.donkanator.com/submit`
 
 
 ### Configuration parameters for the default `SETTINGSURL`
@@ -62,8 +60,10 @@ SCPASSWORD           | Shoutcaster password.          | No password (disabled).
 HOSTNAME             | Server hostname.               | RTCW
 CONF_MOTD            | MOTD line on connect           | Empty.
 TIMEOUTLIMIT         | Maximum number of pauses per map side | 1
-PB_DISABLE           | Disable PB, set to any non-empty string to disable | Empty (PB enabled).
 SERVERCONF           | The value for RtcwPro's `g_customconfig` | `defaultcomp`.
+STATS_SUBMIT         | Push stats to an external API? | Disabled, set to `1` to enable.
+STATS_URL            | API address to push stats data | `https://rtcwproapi.donkanator.com/submit`
+
 
 Extra configuration can be prepended to the `server.cfg` by mounting a
 configuration at `/home/game/extra.cfg`.

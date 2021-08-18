@@ -11,7 +11,6 @@ CONF_RCONPASSWORD=${RCONPASSWORD:-""}
 CONF_REFPASSWORD=${REFEREEPASSWORD:-""}
 CONF_SCPASSWORD=${SCPASSWORD:-""}
 CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
-CONF_PB_DISABLE=${PB_DISABLE:-""}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/msh100/rtcw-config.git"}
 CONF_SETTINGSBRANCH=${SETTINGSBRANCH:-"master"}
@@ -158,11 +157,6 @@ cp "${SETTINGS_BASE}/configs/"*.config "${GAME_BASE}/rtcwpro/configs/"
 # We need to set g_needpass if a password is set
 if [ "${CONF_PASSWORD}" != "" ]; then
     CONF_NEEDPASS='set g_needpass "1"'
-fi
-
-# If PB_DISABLE is set, then let's not enable PB
-if [ "${CONF_PB_DISABLE}" == "" ]; then
-    CONF_PB='pb_sv_enable'
 fi
 
 # Iterate over all config variables and write them in place
