@@ -36,4 +36,5 @@ rm -rf \
     "${datapath}/rtcwpro/"*.cfg \
     "/tmp/rtcwpro.releases"
 
-chmod +x "${datapath}/wolfded.x86"
+chmod 0755 "${datapath}/wolfded.x86"
+chmod 0755 "${datapath}/rtcwpro/qagame.mp.i386.so"
