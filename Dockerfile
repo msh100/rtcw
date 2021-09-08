@@ -29,7 +29,7 @@ RUN mkdir -p /output/main/ && \
     cp /gamefiles/Main/pak0.pk3 /output/main/
 
 ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
-RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "48038534" && \
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "49227130" && \
     mv /output/rtcwpro-data/rtcwpro /output/ && \
     mv /output/rtcwpro-data/wolfded.x86 /output/ && \
     rm -rf /output/rtcwpro-data
@@ -76,7 +76,7 @@ WORKDIR /home/game
 
 COPY --chown=game:game --from=basegame /output/ /home/game
 
-RUN git clone --depth 1 "https://github.com/acelad88/rtcw-config.git" \
+RUN git clone --depth 1 "https://github.com/msh100/rtcw-config.git" \
     /home/game/settings/
 
 COPY --chown=game:game entrypoint.sh /home/game/start
