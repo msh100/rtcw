@@ -14,7 +14,7 @@ CONF_TIMEOUTLIMIT=${TIMEOUTLIMIT:-1}
 CONF_SERVERCONF=${SERVERCONF:-"defaultcomp"}
 CONF_SETTINGSGIT=${SETTINGSURL:-"https://github.com/msh100/rtcw-config.git"}
 CONF_SETTINGSBRANCH=${SETTINGSBRANCH:-"master"}
-CONF_CHECKVERSION="10"
+CONF_CHECKVERSION="12"
 CONF_STATS_SUBMIT=${STATS_SUBMIT:-"0"}
 CONF_STATS_URL=${STATS_URL:-"https://rtcwproapi.donkanator.com/submit"}
 
@@ -195,6 +195,7 @@ exec "${binary}" \
     +set sv_GameConfig "${CONF_SERVERCONF}" \
     +set sv_authenabled 0 \
     +set sv_AuthStrictMode 0 \
+    +set sv_checkversion "${CONF_CHECKVERSION}" \
     +exec "server.cfg" \
     +map "${CONF_STARTMAP}" \
     "${@}"

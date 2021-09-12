@@ -29,7 +29,7 @@ RUN mkdir -p /output/main/ && \
     cp /gamefiles/Main/pak0.pk3 /output/main/
 
 ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
-RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "49227130" && \
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "49418849" && \
     mv /output/rtcwpro-data/rtcwpro /output/ && \
     mv /output/rtcwpro-data/wolfded.x86 /output/ && \
     rm -rf /output/rtcwpro-data
