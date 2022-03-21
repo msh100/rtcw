@@ -29,7 +29,7 @@ RUN mkdir -p /output/main/ && \
     cp /gamefiles/Main/pak0.pk3 /output/main/
 
 ADD fetchRtcwPro.sh /output/fetchRtcwPro.sh
-RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "49418849" && \
+RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "62291596" && \
     mv /output/rtcwpro-data/rtcwpro /output/ && \
     mv /output/rtcwpro-data/wolfded.x86 /output/ && \
     rm -rf /output/rtcwpro-data
@@ -50,7 +50,7 @@ RUN wget https://msh100.uk/files/rtcw-binaries.tar.gz && \
 RUN wget https://msh100.uk/files/libnoquery.so && \
     md5sum libnoquery.so | cut -d' ' -f1 | grep 91d9c6fd56392c60461c996ca29d6467
 
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 MAINTAINER Marcus Hughes <hello@msh100.uk>
 
 ENV DEBIAN_FRONTEND noninteractive
