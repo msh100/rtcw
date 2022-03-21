@@ -23,7 +23,6 @@ fi
 
 # Unzip the content of the RTCWPro repository
 unzip "/tmp/${filename}" -d "${datapath}"
-mv "${datapath}/rtcwpro_127_server/"* "${datapath}"
 
 # Cleanup unwanted files
 rm -rf \
@@ -35,7 +34,6 @@ rm -rf \
     "${datapath}/configs" \
     "${datapath}/mapConfigs" \
     "${datapath}/rtcwpro/"*.cfg \
-    "${datapath}/rtcwpro_127_server/" \
     "/tmp/rtcwpro.releases"
 
 chmod 0755 "${datapath}/wolfded.x86"
