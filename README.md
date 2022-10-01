@@ -17,8 +17,9 @@ A server with this image will run v1.41b.
 
 A container using this image will always try and download the latest changes
 from whatever `SETTINGSURL` is set to.
-By default this is the [rtcw-config](https://github.com/msh100/rtcw-config)
-repository.
+By default this is the [rtcw-config](https://github.com/Oksii/rtcw-config)
+repository, originally based on
+[msh100/rtcw-config](https://github.com/msh100/rtcw-config).
 
 
 ## Example
@@ -45,7 +46,7 @@ MAP_PORT             | Container port (internal)      | 27960
 NOQUERY              | Disable status queries         | Disabled, set to `true` to enable.
 MAXCLIENTS           | Maximum number of players      | 32
 AUTO_UPDATE          | Update configurations on restart? | Enabled, set to `false` to enable.
-SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. | https://github.com/msh100/rtcw-config.git
+SETTINGSURL          | The git URL (must be HTTP public) for the RTCW settings repository. | https://github.com/Oksii/rtcw-config.git
 SETTINGSBRANCH       | The git branch for the RTCW settings repository. | `master`
 
 
