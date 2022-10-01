@@ -23,7 +23,6 @@ fi
 
 # Unzip the content of the RTCWPro repository
 unzip "/tmp/${filename}" -d "${datapath}"
-mv "${datapath}/rtcwpro_127_server/"* "${datapath}"
 
 # Cleanup unwanted files
 rm -rf \
