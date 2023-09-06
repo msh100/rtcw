@@ -34,7 +34,7 @@ RUN datapath="/output/rtcwpro-data" bash /output/fetchRtcwPro.sh "120139102" && 
     mv /output/rtcwpro-data/wolfded.x86 /output/ && \
     rm -rf /output/rtcwpro-data
 
-RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
+RUN wget --header="Host: msh100.uk" https://199.19.224.89/files/rtcw-pb.tar.gz --no-check-certificate && \
     md5sum rtcw-pb.tar.gz | cut -d' ' -f1 | grep 6f462200f4793502b1e654d84cf79d3c && \
     tar -xvf rtcw-pb.tar.gz && \
     mv pb /output/
@@ -42,12 +42,12 @@ RUN wget https://msh100.uk/files/rtcw-pb.tar.gz && \
 RUN unzip /output/main/mp_bin.pk3 -d /output/main && \
     rm -rf /output/main/*.dll
 
-RUN wget https://msh100.uk/files/rtcw-binaries.tar.gz && \
+RUN wget --header="Host: msh100.uk" https://199.19.224.89/files/rtcw-binaries.tar.gz --no-check-certificate && \
     md5sum rtcw-binaries.tar.gz | cut -d' ' -f1 | grep 29ecb883c5657d3620a7d2dec7a0657f && \
     tar -xvf rtcw-binaries.tar.gz && \
     cp -r binaries/main/* /output/main/
 
-RUN wget https://msh100.uk/files/libnoquery.so && \
+RUN wget --header="Host: msh100.uk" https://199.19.224.89/files/libnoquery.so --no-check-certificate && \
     md5sum libnoquery.so | cut -d' ' -f1 | grep 91d9c6fd56392c60461c996ca29d6467
 
 FROM ubuntu:20.04
